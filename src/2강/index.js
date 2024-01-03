@@ -66,3 +66,16 @@ var under_30 = _filter(users, function(user) { return user.age <= 30 });
 var ages_f = _map(under_30,function(user) { return user.age })
 console.log('3. 30세 미만인 users를 거른다.',under_30);
 console.log('4. 30세 미만인 users의 ages를 수집한다.',ages_f);
+
+/* Example - 다형성 코드 */
+console.log('============ 다형성 ============')
+
+console.log(
+   "document.querySelectorAll('*').map((v)=>{});" // NodeList는 배열이 아닌 유사 배열이기 때문에 map 메소드를 사용할 수 없음
+);
+
+console.log(
+  _map([1,2,3,4],function(v){
+    return v+10;
+  })
+)
