@@ -105,6 +105,30 @@ function _reduce(list, iter, memo){
   return memo;
 }
 
+/**
+ * 함수를 리턴하는 함수
+ * 연속적인 함수 실행
+ */
+function _pipe(){
+  var fns = arguments;
+  return function(arg){
+    return _reduce(fns, function(arg, fn){
+      return fn(arg);
+    }, arg);
+  }
+}
+
+/**
+ * pipe 즉시 실행 버전 
+ *  - pipe는 함수를 반환하기 때문에 즉시 실행 불가
+ * @param {*} arg 
+ * @returns 
+ */
+function _go(arg){
+  var fns = _rest(arguments);
+  return _pipe.apply(null, fns)(arg);
+}
+
 module.exports = {
   users,
   _filter,
@@ -112,5 +136,7 @@ module.exports = {
   _curry,
   _curryr,
   _get,
-  _reduce
+  _reduce,
+  _pipe,
+  _go
 };
