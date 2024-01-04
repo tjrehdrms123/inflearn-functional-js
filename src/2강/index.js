@@ -1,4 +1,4 @@
-const { users, _map, _filter } = require("./_");
+const { users, _map, _filter } = require("../core/_");
 
 /*
   요구사항

@@ -1,4 +1,4 @@
-const { users, _curry, _curryr, _get, _map, _filter } = require("./_");
+const { users, _curry, _curryr, _get, _map, _filter } = require("../core/_");
 
 /* Exmaple - Curry */
 
