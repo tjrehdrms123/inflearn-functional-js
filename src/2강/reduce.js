@@ -1,4 +1,4 @@
-const { _reduce, _pipe, _go } = require("../core/_");
+const { users, _reduce, _pipe, _go, _filter, _map, _get, _filter_cr, _map_cr } = require("../core/_");
 
 /*
   === 실행동작 예시 ===
@@ -40,3 +40,49 @@ console.log(_go(
   function(a) { return a*3 },
   function(a) { return a-10 }
 ));
+
+console.log('============ go 활용 ============')
+
+// _go(users,
+//   users =>
+//     _filter(users, user => user.age >= 30)
+//   ,
+//   users =>
+//     _map(users, _get('name')),
+//   console.log
+// )
+
+_go(users,
+  function(users){
+    return _filter(users, user => user.age >= 30)
+  },
+  function(users){
+    return _map(users, _get('name'))
+  },
+  console.log
+)
+
+_go(users,
+  function(users){
+    return _filter(users, user => user.age < 30)
+  },
+  function(users){
+    return _map(users, _get('age'))
+  },
+  console.log
+)
+
+_go(users, 
+  _filter_cr(function(user) {
+    return user.age >= 30;
+  }),
+  _map_cr(_get('name')),
+  console.log
+)
+
+// map, filter _curryr 적용 + 화살표 함수
+_go(users, 
+  _filter_cr(user => user.age < 30),
+  _map_cr(_get('name')),
+  console.log
+)

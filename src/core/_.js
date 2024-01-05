@@ -81,6 +81,8 @@ var _get = _curryr(function(obj, key) {
 
 /**
  * 배열로 만들어 splice을 수행 하도록
+ *  - 유사 배열로 넘어올 경우를 대비해 Array slice를 call해서 수행
+ *    - 메서드 내부에서 this가 배열 객체를 가리키게 하기 위해서 call 사용
  */
 function _rest(list, num){
   var slice = Array.prototype.splice;
@@ -110,7 +112,7 @@ function _reduce(list, iter, memo){
  * 연속적인 함수 실행
  */
 function _pipe(){
-  var fns = arguments;
+  var fns = arguments; // 클로저
   return function(arg){
     return _reduce(fns, function(arg, fn){
       return fn(arg);
@@ -126,6 +128,7 @@ function _pipe(){
  */
 function _go(arg){
   var fns = _rest(arguments);
+  // _pipe 함수에서 인자가 배열로 들어왔을 때를 처리해준다면 apply가 아닌 _pipe(fns)(arg)로 사용해도됨
   return _pipe.apply(null, fns)(arg);
 }
 
@@ -133,6 +136,8 @@ module.exports = {
   users,
   _filter,
   _map,
+  _filter_cr: _curryr(_filter),
+  _map_cr: _curryr(_map),
   _curry,
   _curryr,
   _get,
