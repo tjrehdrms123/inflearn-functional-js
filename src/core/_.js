@@ -43,9 +43,12 @@ function _map(list, mapper) {
  * @param {Function} iter 
  */
 function _each(list, iter){
-  for(var i = 0; i<list.length; i++) {
-    iter(list[i]);
+  // var _length = _get('length'); // null 에러처리
+  var keys = _keys(list); // 배열이 아니도록 순회 가능 하도록 다형성 처리
+  for(var i = 0, len = keys.length; i < len; i++) {
+    iter(list[keys[i]]);
   }
+  return list;
 }
 
 /**
@@ -84,8 +87,8 @@ var _get = _curryr(function(obj, key) {
  *  - 유사 배열로 넘어올 경우를 대비해 Array slice를 call해서 수행
  *    - 메서드 내부에서 this가 배열 객체를 가리키게 하기 위해서 call 사용
  */
+var slice = Array.prototype.splice;
 function _rest(list, num){
-  var slice = Array.prototype.splice;
   return slice.call(list, num || 1);
 }
 
@@ -132,16 +135,28 @@ function _go(arg){
   return _pipe.apply(null, fns)(arg);
 }
 
+function _is_object(obj){
+  return typeof obj == 'object' && !!obj;
+}
+
+function _keys(obj){
+  return _is_object(obj) ? Object.keys(obj) : [];
+}
+
+var _map = _curryr(_map),
+  _each = _curryr(_each),
+  _filter = _curryr(_filter);
+
 module.exports = {
   users,
   _filter,
   _map,
-  _filter_cr: _curryr(_filter),
-  _map_cr: _curryr(_map),
   _curry,
   _curryr,
   _get,
   _reduce,
   _pipe,
-  _go
+  _go,
+  _each,
+  _keys
 };

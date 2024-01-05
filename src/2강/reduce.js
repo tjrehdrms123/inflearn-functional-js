@@ -1,4 +1,4 @@
-const { users, _reduce, _pipe, _go, _filter, _map, _get, _filter_cr, _map_cr } = require("../core/_");
+const { users, _reduce, _pipe, _go, _filter, _map, _get } = require("../core/_");
 
 /*
   === 실행동작 예시 ===
@@ -73,16 +73,16 @@ _go(users,
 )
 
 _go(users, 
-  _filter_cr(function(user) {
+  _filter(function(user) {
     return user.age >= 30;
   }),
-  _map_cr(_get('name')),
+  _map(_get('name')),
   console.log
 )
 
 // map, filter _curryr 적용 + 화살표 함수
 _go(users, 
-  _filter_cr(user => user.age < 30),
-  _map_cr(_get('name')),
+  _filter(user => user.age < 30),
+  _map(_get('name')),
   console.log
 )

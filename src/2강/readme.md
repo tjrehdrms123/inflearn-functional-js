@@ -31,3 +31,4 @@
 - [Map, Filter](./index.js)
 - [Curry Example](./curry.js)
 - [Reduce Example](./reduce.js)
+- [keys Example](./keys.js)
