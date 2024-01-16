@@ -47,7 +47,7 @@ function _each(list, iter){
   // var _length = _get('length'); // null 에러처리
   var keys = _keys(list); // 배열이 아니도록 순회 가능 하도록 다형성 처리
   for(var i = 0, len = keys.length; i < len; i++) {
-    iter(list[keys[i]]);
+    iter(list[keys[i]], keys[i]);
   }
   return list;
 }
@@ -238,6 +238,34 @@ function _max_by(data, iter) {
   });
 }
 
+/* obj[key]가 있으면 그대로 사용하고 없으면 배열로 초기화 시킨다. */
+function _push(obj, key, val){
+  (obj[key] = obj[key] || []).push(val) 
+  return obj;
+}
+
+/* count에 값이 없다면 1로 초기화 시키고, 값이 있다면 해당 값을 증가시킴 */
+function _inc(count, val){
+  count[val] ? count[val]++ : count[val] = 1;
+  return count;
+}
+
+var _group_by = _curryr(function(data, iter){
+  return _reduce(data, function(grouped, val){
+    return _push(grouped,iter(val),val);
+  }, {});
+});
+
+var _count_by = _curryr(function(data, iter){
+  return _reduce(data, function(count, val){
+    return _inc(count, iter(val));
+  });
+});
+
+var _head = function(list){
+  return list[0];
+}
+
 var _map = _curryr(_map),
   _each = _curryr(_each),
   _filter = _curryr(_filter);
@@ -246,6 +274,8 @@ var _map = _curryr(_map),
   _min_by = _curryr(_min_by);
   _max_by = _curryr(_max_by);
   _reject = _curryr(_reject);
+
+var _pairs = _map((val,key) => [key, val]);
 
 module.exports = {
   users,
@@ -272,5 +302,9 @@ module.exports = {
   _min,
   _max,
   _min_by,
-  _max_by
+  _max_by,
+  _group_by,
+  _count_by,
+  _pairs,
+  _head
 };

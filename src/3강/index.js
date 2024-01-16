@@ -1,4 +1,4 @@
-const { _map, users, _keys, _values, _identity, _pluck, _filter, _reject, _compact, _find, _find_index, _go, _get, _every, _some, _min, _max, _min_by, _max_by } = require("../core/_");
+const { _map, users, _keys, _values, _identity, _pluck, _filter, _reject, _compact, _find, _find_index, _go, _get, _every, _some, _min, _max, _min_by, _max_by, _curryr, _reduce, _pipe, _group_by, _count_by, _head, _pairs } = require("../core/_");
 
 // 수집하기
 /* Example - map */
@@ -76,3 +76,30 @@ console.log('_min_by:',_min_by([10,-3,5,9,2,12],Math.abs));
 
 /* Example - max_by */
 console.log('_max_by:',_max_by([10,-3,5,9,2,-12],Math.abs));
+
+/* Example - group_by */
+_go(users, 
+  _group_by(function(user){
+    return user.age
+  }),
+  console.log);
+
+_go(users, 
+_group_by(function(user){
+  return user.age - user.age % 10;
+}),
+console.log);
+
+_go(users, 
+  _group_by(_pipe(_get('name'), _head)),
+  console.log);
+
+/* Example - count_by */
+_go(users, 
+  _count_by(function(user){
+    return user.age - user.age % 10;
+  }),
+  console.log);
+
+/* Example - pairs */
+console.log(_pairs(users[0]))
