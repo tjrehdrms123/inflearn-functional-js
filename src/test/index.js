@@ -1,4 +1,4 @@
-const { users } = require("../core/_");
+const { users, _filter, _go } = require("../core/_");
 
 /*
   요구사항
@@ -14,6 +14,8 @@ function __each(list, iter){
   }
 }
 
+
+
 function __map(list, mapper){
   const new_list = [];
   __each(list,function(val){
@@ -22,7 +24,7 @@ function __map(list, mapper){
   return new_list;
 }
 
-function __fileter(list, predi){
+function __filter(list, predi){
   const new_list = [];
   __each(list,function(val){
     if(predi(val)){
@@ -40,12 +42,32 @@ function __curry(fn){
   }
 }
 
+
 // console.log(names);
 console.clear();
 
-console.log('__map:',__map(users, user => user.age));
-console.log('__filter:',__fileter(users, user => user.age > 30));
+// console.log('__map:',__map(users, user => user.age));
+// console.log('__filter:',__filter(users, user => user.age > 30));
 
-const add = __curry((a,b)=>a+b)
-const add10 = add(10);
-console.log(add10(5));
+// const add = __curry((a,b)=>a+b)
+// const add10 = add(10);
+// console.log(add10(5));
+
+// let numbers = [3,2,5,4,23,3,2,1];
+// let minNumbers = numbers[0];
+
+// for(let i = 0; i < numbers.length; i++){
+//   if(minNumbers > numbers[i]){
+//       minNumbers = numbers[i];
+//   }
+// }
+
+// console.log('f:',_filter(numbers,v=>v < 3));
+// console.log(new_list2);
+// console.log(a);
+
+var numbers = [1,4,2,6,8,9,3,2,3,2,1,3];
+
+function removeDuplicates(arr) {
+  var uniqArr = [];
+}

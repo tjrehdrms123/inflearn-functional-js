@@ -34,18 +34,18 @@
 - 지연 평가
 - 요약, 클로저, 엘릭서, 병렬성
 
-### [5강(실전코드조각)](./src/5강/readme.md)
+### [5강(실전코드조각)](./src/5강/index.js)
 
 - users, posts, comments
 - 효율 높이기
 
-### [6강(실전코드조각 2)](./src/6강/readme.md)
+### [6강(실전코드조각 2)](./src/6강/index.js)
 
 - users, posts, comments
 - 효율 높이기
 
 - 장바구니
 
-### [7강(비동기)](./src/7강/readme.md)
+### [7강(비동기)](./src/7강/index.js)
 
 - 비동기

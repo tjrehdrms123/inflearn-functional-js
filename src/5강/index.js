@@ -135,7 +135,40 @@ _.go(
 )
 
 // 5. users + posts + comments (index_by와 group_by로 효율 높이기)
-// 5.1. 특정인의 posts의 모든 comments 거르기
+console.log('============ 5. users + posts + comments (index_by와 group_by로 효율 높이기) ============');
+
+var users2 = _.index_by(users, 'id');
+function find_user_by_id(user_id){
+  return users2[user_id];
+}
+
+// var comment2 = _.map(comments, function(comment){
+//   // comment.user = { id: 1 }
+//   // 위와 같이 직접 값을 변경하게 되면 원본 배열까지 변경하게 되어서 안됨. 해결 방법으로 extend를 사용하게 되면 `call by value` 형태로 할 수 있음
+//   return _.extend({
+//     user: find_user_by_id(comment.user_id)
+//   }, comment)
+// });
+
+var comment2 = _.go(
+  comments,
+  _.map(function(comment) {
+    return _.extend({
+      user: find_user_by_id(comment.user_id)
+    }, comment)
+  }),
+  _.group_by('post_id')
+)
+
+var post2 = _.map(posts, function(post){
+  return _.extend({
+    comments: comment2[post.id],
+    user: find_user_by_id(post.user_id)
+  }, post)
+});
+
+console.log('post2:',post2);
+// 5.1. 특정인의 posts의 모든 coments 거르기
 // 5.2. 특정인의 posts에 comments를 단 친구의 이름들 뽑기
 // 5.3. 특정인의 posts에 comments를 단 친구들 카운트 정보
 // 5.4. 특정인이 comment를 단 posts 거르기
